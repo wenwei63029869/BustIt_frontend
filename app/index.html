@@ -1,63 +1,116 @@
 <!doctype html>
-<html>
+<html ng-app="eventMeetApp">
   <head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="scripts/templatejs/skel.min.js"></script>
+    <script src="scripts/templatejs/skel-layers.min.js"></script>
+    <script src="scripts/templatejs/init.js"></script>
+    <noscript>
+      <link rel="stylesheet" href="styles/skel.css" />
+      <link rel="stylesheet" href="styles/style.css" />
+      <link rel="stylesheet" href="styles/style-xlarge.css" />
+    </noscript>
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/rooms.css" />
     <!-- endbuild -->
   </head>
-  <body ng-app="eventMeetApp">
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+  <body class='landing'>
+    <!-- header -->
+    <header id="header">
+      <h1><a href="index.html">BustIt</a></h1>
+      <nav id="nav">
+        <ul>
+          <li><a href="/" class='home-button'>Home</a></li>
+          <li><a href="/#/rooms" class='room-button'>Play Rooms</a></li>
+          <li><a href="#" class="button special">Sign Up</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div ui-view></div>
 
-    <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-
-            <a class="navbar-brand" href="#/">eventMeet</a>
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <section class="links">
+          <div class="row">
+            <section class="3u 6u(medium) 12u$(small)">
+              <h3>Lorem ipsum dolor</h3>
+              <ul class="unstyled">
+                <li><a href="#">Lorem ipsum dolor sit</a></li>
+                <li><a href="#">Nesciunt itaque, alias possimus</a></li>
+                <li><a href="#">Optio rerum beatae autem</a></li>
+                <li><a href="#">Nostrum nemo dolorum facilis</a></li>
+                <li><a href="#">Quo fugit dolor totam</a></li>
+              </ul>
+            </section>
+            <section class="3u 6u$(medium) 12u$(small)">
+              <h3>Culpa quia, nesciunt</h3>
+              <ul class="unstyled">
+                <li><a href="#">Lorem ipsum dolor sit</a></li>
+                <li><a href="#">Reiciendis dicta laboriosam enim</a></li>
+                <li><a href="#">Corporis, non aut rerum</a></li>
+                <li><a href="#">Laboriosam nulla voluptas, harum</a></li>
+                <li><a href="#">Facere eligendi, inventore dolor</a></li>
+              </ul>
+            </section>
+            <section class="3u 6u(medium) 12u$(small)">
+              <h3>Neque, dolore, facere</h3>
+              <ul class="unstyled">
+                <li><a href="#">Lorem ipsum dolor sit</a></li>
+                <li><a href="#">Distinctio, inventore quidem nesciunt</a></li>
+                <li><a href="#">Explicabo inventore itaque autem</a></li>
+                <li><a href="#">Aperiam harum, sint quibusdam</a></li>
+                <li><a href="#">Labore excepturi assumenda</a></li>
+              </ul>
+            </section>
+            <section class="3u$ 6u$(medium) 12u$(small)">
+              <h3>Illum, tempori, saepe</h3>
+              <ul class="unstyled">
+                <li><a href="#">Lorem ipsum dolor sit</a></li>
+                <li><a href="#">Recusandae, culpa necessita nam</a></li>
+                <li><a href="#">Cupiditate, debitis adipisci blandi</a></li>
+                <li><a href="#">Tempore nam, enim quia</a></li>
+                <li><a href="#">Explicabo molestiae dolor labore</a></li>
+              </ul>
+            </section>
           </div>
-
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
+        </section>
+        <div class="row">
+          <div class="8u 12u$(medium)">
+            <ul class="copyright">
+              <li>&copy; Creativity. All rights reserved.</li>
+              <li>Design: <a href="http://templated.co">TEMPLATED</a></li>
+              <li>Images: <a href="http://unsplash.com">Unsplash</a></li>
+            </ul>
+          </div>
+          <div class="4u$ 12u$(medium)">
+            <ul class="icons">
+              <li>
+                <a class="icon rounded fa-facebook" href="http://www.facebook.com"><span class="label">Facebook</span></a>
+              </li>
+              <li>
+                <a class="icon rounded fa-twitter"><span class="label">Twitter</span></a>
+              </li>
+              <li>
+                <a class="icon rounded fa-google-plus"><span class="label">Google+</span></a>
+              </li>
+              <li>
+                <a class="icon rounded fa-linkedin"><span class="label">LinkedIn</span></a>
+              </li>
             </ul>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="container">
-    <div ng-view=""></div>
-    </div>
-
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
-    </div>
-
+    </footer>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -72,22 +125,21 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/homepage_ctrl.js"></script>
+        <script src="scripts/controllers/rooms_ctrl.js"></script>
         <!-- endbuild -->
 </body>
 </html>
