@@ -110,3 +110,15 @@
   [class*=' form-group'].margin-0 [class*=' form-group'] {
     margin-left: 0;
     margin-right: 0; }
+
+/*
+  form
+*/
+
+.css-form input.ng-invalid.ng-touched {
+  background-color: #FA787E;
+}
+
+.css-form input.ng-valid.ng-touched {
+  background-color: #78FA89;
+}

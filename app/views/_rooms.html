@@ -1,60 +1,80 @@
-<div class="container">
-
-    <h2>Mobile-Friendly API Documentation</h2>
+<!-- Rooms -->
+<section id="rooms" class="wrapper style1 special">
+  <div class="container">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <h2>Available rooms</h2>
     <p class="lead">
-        Emulate tables that collapse beautifully on mobile devices!
+        instruction~~~~~~~~~~~
     </p>
 
-    <div class="alert alert-info">
-        <h4>Row modifier class included</h4>
-        <p>This feature uses a row modifier I created called ".margin-0". When applied to a ".row" element, it will ensure the margins between the columns will be 0. </p>
-        <p>This is important in order to emulate the table-like effect, but it will work in any environment.</p>
-    </div>
-
     <hr />
-
     <div class="method">
         <div class="row margin-0 list-header hidden-sm hidden-xs">
-            <div class="col-md-3"><div class="header">Property</div></div>
-            <div class="col-md-2"><div class="header">Type</div></div>
-            <div class="col-md-2"><div class="header">Required</div></div>
+            <div class="col-md-3"><div class="header">Name</div></div>
+            <div class="col-md-2"><div class="header">Host</div></div>
+            <div class="col-md-2"><div class="header">Number of players</div></div>
             <div class="col-md-5"><div class="header">Description</div></div>
         </div>
 
+    <div ng-repeat="room in rooms">
         <div class="row margin-0">
             <div class="col-md-3">
                 <div class="cell">
                     <div class="propertyname">
-                        CurrencyCode  <span class="mobile-isrequired">[Required]</span>
+                        <a href="/#/rooms/{{$index}}">
+                          {{room.name}}
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="cell">
                     <div class="type">
-                        <code>String</code>
+                        <code>{{room.host.name}}</code>
                     </div>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="cell">
                     <div class="isrequired">
-                        Yes
+                        {{room.players.length}}
                     </div>
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="cell">
                     <div class="description">
-                        The standard ISO 4217 3-letter currency code
+                        {{room.description}}
                     </div>
                 </div>
             </div>
         </div>
-        <br/>
-        <a href="/" class='home-button create-room-button button special' >Create a new room</a>
-        <br/>
-        <br/>
-        <br/>
     </div>
-</div>
+        <br/>
+        <button class='create-room-button button special' ng-click='jumpToAddRooms()'>Create a new room</button>
+    </div>
+  </div>
+</section>
+
+<!-- form -->
+<section id="form" class="wrapper style2 special">
+  <div class="container">
+    <header class="major">
+      <h2>Let's create a room and invite your friend to join!</h2>
+    </header>
+    <section class="profiles">
+        <form novalidate class="css-form" ng-submit="addRoom(room)">
+            Give a name for the room: <br/>
+            <input type="text" ng-model="room.name" required /><br />
+            Description <br/>
+            <input type="text" ng-model="room.description" required /><br />
+            <input type="button" ng-click="reset()" value="Reset" />
+            <input type="submit" value="Save" />
+        </form>
+    </section>
+  </div>
+</section>
+
