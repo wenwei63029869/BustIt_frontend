@@ -1,7 +1,6 @@
 'use strict'
 angular.module('eventMeetApp')
 .controller('HomepageCtrl', function($scope) {
-  $scope.name = "Wei";
   console.log(document.getElementById("one"))
   $scope.jumpToTheRules = function(){
     // document.getElementById("one").scrollIntoView({block: "start", behavior:"auto"})

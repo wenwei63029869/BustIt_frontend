@@ -16,7 +16,8 @@ angular
   'ngResource',
   'ui.router',
   'ngSanitize',
-  'ngTouch'
+  'ngTouch',
+  'angular-flippy'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
@@ -26,13 +27,15 @@ angular
     templateUrl: 'views/_homepage.html',
     controller: 'HomepageCtrl'
   })
-  .state('roompage', {
+  .state('rooms', {
     url: '/rooms',
     templateUrl: 'views/_rooms.html',
-    controller: 'RoomsCtrl',
-    resolve: {
-
-    }
+    controller: 'RoomsCtrl'
+  })
+  .state('room', {
+    url: '/rooms/{id}',
+    templateUrl: 'views/_room.html',
+    controller: 'RoomCtrl'
   });
 })
 
