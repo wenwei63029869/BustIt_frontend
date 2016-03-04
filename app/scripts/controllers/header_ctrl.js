@@ -6,24 +6,18 @@ angular.module('eventMeetApp')
   '$auth',
   'AuthService',
   function($scope, $auth, AuthService) {
-    $scope.currentUser = ""
-    AuthService.getProfile()
-    .success(function(data){
-        console.log(data);
-        $scope.currentUser = data;
-      });
+    $scope.currentUser = AuthService.currentUser
     console.log($scope.currentUser);
-    // console.log($scope.currentUser)
+    $scope.isAuthenticated = function() {
+      return $auth.isAuthenticated();
+    };
     $scope.authenticate = function(provider) {
-        console.log('auth');
-        console.log(window.location.origin);
-        $auth.authenticate(provider)
-        .then(function() {
-          AuthService.getProfile()
-            .success(function(data) {
-              $scope.currentUser = data;
-              console.log($scope.currentUser)
-            });
-        });
-      };
+      AuthService.authenticate(provider);
+      $scope.currentUser = AuthService.currentUser
+      console.log("currentUser:" + $scope.currentUser);
+    };
+    $scope.logout = function(){
+      console.log("logout")
+      $auth.logout();
+    }
  }]);

@@ -4,8 +4,9 @@
     <ul>
       <li><a href="/" class='home-button'>Home</a></li>
       <li><a href="/#/rooms" class='room-button'>Play Rooms</a></li>
-      <li ng-if="currentUser"><a href="/" class='home-button'>Welcome, {{currentUser.displayName}}</a></li>
-      <li ng-if="!currentUser"><a ng-click="authenticate('facebook')">Sign in with Facebook</a></li>
+      <li ng-show="isAuthenticated()"><a class='home-button'>Welcome, {{currentUser.displayName}}</a></li>
+      <li ng-show="isAuthenticated()"><a ng-click="logout()">Log out</a></li>
+      <li ng-hide="isAuthenticated()"><a ng-click="authenticate('facebook')">Sign in with Facebook</a></li>
     </ul>
   </nav>
 </header>
