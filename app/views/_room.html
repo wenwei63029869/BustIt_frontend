@@ -15,7 +15,10 @@
         You have enough people to start the game!
     </p>
     <br/>
-    <button ng-hide='showform'  ng-if='count < 7'class='create-room-button button special' ng-click='showForm()'>Join</button>
+    <button ng-hide='showform' ng-if='count < 7'class='create-room-button button special' ng-click='showForm()'>Join</button>
+
+    <button class='create-room-button button special' ng-click='closeRoom()'>Close room</button>
+
     <form ng-show='showform' novalidate class="css-form" ng-submit="addPlayer(player)">
         Name
         <input type="text" ng-model="player.name" required />
