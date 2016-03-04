@@ -10,7 +10,7 @@ angular.module('eventMeetApp')
 
   var pathname = window.location.href;
   $scope.room = room;
-  console.log('room: ' + room)
+  console.log(room)
   $scope.count = 0
   $scope.currentUser = AuthService.currentUser;
   $scope.showform = false;
