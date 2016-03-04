@@ -7,7 +7,6 @@ angular.module('eventMeetApp')
   };
 
   $scope.jumpToAddRooms = function(){
-    console.log("add rooms")
     $('html, body').animate({
         scrollTop: $("#form").offset().top
     }, 400);
@@ -32,7 +31,7 @@ angular.module('eventMeetApp')
   };
 
   $scope.reset = function() {
-    // angular.copy($scope.user, $scope.master);
+    angular.copy($scope.master, $scope.room);
   };
 
   $scope.reset();

@@ -3,13 +3,14 @@ angular.module('eventMeetApp')
 .controller('RoomCtrl', [
   '$scope',
   '$stateParams',
-  'rooms',
-  '$rootScope',
+  'RoomsService',
   'AuthService',
-  function($scope, $stateParams, rooms, $rootScope, AuthService) {
+  'room',
+  function($scope, RoomsService, AuthService, $stateParams, room) {
 
   var pathname = window.location.href;
-  $scope.room = rooms.rooms[$stateParams.id];
+  $scope.room = room;
+  console.log('room: ' + room)
   $scope.count = 0
   $scope.currentUser = AuthService.currentUser;
   $scope.showform = false;
@@ -39,10 +40,5 @@ angular.module('eventMeetApp')
       $scope.showform = false;
     }
   };
-
-  // $scope.buttonClicked = function() {
-  //   console.log("click the button")
-  //   $rootScope.$broadcast('FLIP_BACK');
-  // }
 
 }]);
