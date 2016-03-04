@@ -28,7 +28,12 @@ angular
       views: {
         'header': {
           templateUrl: 'views/_header.html',
-          controller: 'HeaderCtrl'
+          controller: 'HeaderCtrl',
+          resolve: {
+            authPromise: ['AuthService', function(AuthService){
+              return AuthService.getProfile();
+            }]
+          }
         },
         'main': {
           templateUrl: 'views/_homepage.html',
@@ -48,7 +53,12 @@ angular
       views: {
         'header': {
           templateUrl: 'views/_header.html',
-          controller: 'HeaderCtrl'
+          controller: 'HeaderCtrl',
+          resolve: {
+            authPromise: ['AuthService', function(AuthService){
+              return AuthService.getProfile();
+            }]
+          }
         },
         'main': {
           templateUrl: 'views/_rooms.html',
@@ -72,7 +82,12 @@ angular
       views: {
         'header': {
           templateUrl: 'views/_header.html',
-          controller: 'HeaderCtrl'
+          controller: 'HeaderCtrl',
+          resolve: {
+            authPromise: ['AuthService', function(AuthService){
+              return AuthService.getProfile();
+            }]
+          }
         },
         'main': {
           templateUrl: 'views/_room.html',

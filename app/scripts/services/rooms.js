@@ -3,13 +3,10 @@ angular.module('eventMeetApp')
 .factory('RoomsService', function($http){
 
   var o = {};
-  // var getAll = function() {
-  //   return $http.get('http://localhost:3000/api/rooms')
-  // };
+
   o.rooms = []
 
   o.getAll = function() {
-    console.log('hit get all')
     return $http.get('http://localhost:3000/api/rooms').success(function(data){
       angular.copy(data.rooms, o.rooms);
     });

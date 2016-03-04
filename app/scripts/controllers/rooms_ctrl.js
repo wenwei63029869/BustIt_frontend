@@ -8,7 +8,6 @@ angular.module('eventMeetApp')
 
   $scope.jumpToAddRooms = function(){
     console.log("add rooms")
-    // document.getElementById("one").scrollIntoView({block: "start", behavior:"auto"})
     $('html, body').animate({
         scrollTop: $("#form").offset().top
     }, 400);
