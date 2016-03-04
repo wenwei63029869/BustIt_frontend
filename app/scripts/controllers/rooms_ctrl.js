@@ -15,24 +15,20 @@ angular.module('eventMeetApp')
 
   };
 
-  $scope.rooms = ""
-
-  RoomsService.getRooms()
-  .success(function(data){
-    $scope.rooms = data;
-  });
+  $scope.rooms = RoomsService.rooms
 
   console.log($scope.rooms)
 
   $scope.master = {};
 
-  $scope.addRoom = function(room) {
+  $scope.createRoom = function(room) {
 
-    // $scope.rooms.push({name: room.name, description: room.description});
-    // // $scope.master = angular.copy(room);
-    // $('html, body').animate({
-    //     scrollTop: $("#rooms").offset().top
-    // }, 400);
+    RoomsService.create({
+      name: room.name,
+      description: room.description
+    });
+    $scope.name = '';
+    $scope.description = '';
 
   };
 

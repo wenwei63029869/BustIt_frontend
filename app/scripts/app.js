@@ -58,6 +58,11 @@ angular
           templateUrl: 'views/_footer.html',
           controller: 'FooterCtrl'
         }
+      },
+      resolve: {
+        postPromise: ['RoomsService', function(RoomsService){
+          return RoomsService.getAll();
+        }]
       }
       // templateUrl: 'views/_rooms.html',
       // controller: 'RoomsCtrl'
