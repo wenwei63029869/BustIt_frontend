@@ -1,6 +1,6 @@
 'use strict'
 angular.module('eventMeetApp')
-.controller('RoomsCtrl', ['$scope', 'rooms', function($scope, rooms) {
+.controller('RoomsCtrl', ['$scope', "RoomsService", function($scope, RoomsService) {
   var pathname = window.location.href;
   if (pathname === "http://localhost:9000/#/rooms") {
     $("#header").css("background-color", "#383b43");
@@ -15,18 +15,24 @@ angular.module('eventMeetApp')
 
   };
 
-  $scope.rooms = rooms.rooms
+  $scope.rooms = ""
 
+  RoomsService.getRooms()
+  .success(function(data){
+    $scope.rooms = data;
+  });
+
+  console.log($scope.rooms)
 
   $scope.master = {};
 
   $scope.addRoom = function(room) {
 
-    $scope.rooms.push({name: room.name, description: room.description});
-    // $scope.master = angular.copy(room);
-    $('html, body').animate({
-        scrollTop: $("#rooms").offset().top
-    }, 400);
+    // $scope.rooms.push({name: room.name, description: room.description});
+    // // $scope.master = angular.copy(room);
+    // $('html, body').animate({
+    //     scrollTop: $("#rooms").offset().top
+    // }, 400);
 
   };
 
