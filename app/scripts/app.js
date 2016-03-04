@@ -20,7 +20,7 @@ angular
   'angular-flippy',
   'satellizer'
 ])
-.config(function($rootScopeProvider, $stateProvider, $urlRouterProvider, $authProvider) {
+.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
     .state('homepage', {
@@ -44,9 +44,6 @@ angular
           controller: 'FooterCtrl'
         }
       }
-      // templateUrl: 'views/_homepage.html'
-      // ,
-      // controller: 'HomepageCtrl'
     })
     .state('rooms', {
       url: '/rooms',
@@ -72,10 +69,15 @@ angular
       resolve: {
         postPromise: ['RoomsService', function(RoomsService){
           return RoomsService.getAll();
+        }],
+        checkLoginIn: ['$auth', function($auth){
+          console.log("hit it")
+          if (!$auth.isAuthenticated()) {
+            console.log("not login")
+            $location.path('/').replace();
+          }
         }]
       }
-      // templateUrl: 'views/_rooms.html',
-      // controller: 'RoomsCtrl'
     })
     .state('room', {
       url: '/rooms/{id}',
@@ -97,9 +99,21 @@ angular
           templateUrl: 'views/_footer.html',
           controller: 'FooterCtrl'
         }
+      },
+      resolve: {
+        room: ['$stateParams', 'RoomsService', function($stateParams, RoomsService) {
+          var id = (parseInt($stateParams.id) + 1).toString()
+          return RoomsService.get(id);
+        }],
+        checkLoginIn: ['$auth', function($auth){
+          console.log("hit it")
+          if (!$auth.isAuthenticated()) {
+            console.log("not login")
+            $location.path('/').replace();
+          }
+        }]
       }
-      // templateUrl: 'views/_room.html',
-      // controller: 'RoomCtrl'
+
     });
 
     $authProvider.facebook({

@@ -5,7 +5,7 @@
     <br/>
     <br/>
     <br/>
-    <h2>{{room.name}} <small>hosted by: {{room.host.name}}</small></h2>
+    <h2>{{room.name}}</h2>
 
 
     <p ng-if='count < 7' class="lead">
@@ -37,7 +37,7 @@
           <th>Keyword</th>
           <th>Status</th>
           <tr ng-repeat="player in room.players">
-            <td>{{player.name}}</td>
+            <td>{{player.display_name}}</td>
             <td>keyword</td>
             <td>Yes</td
           </tr>

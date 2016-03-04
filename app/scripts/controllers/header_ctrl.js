@@ -5,7 +5,8 @@ angular.module('eventMeetApp')
   '$scope',
   '$auth',
   'AuthService',
-  function($scope, $auth, AuthService) {
+  '$location',
+  function($scope, $auth, AuthService, $location) {
     $scope.currentUser = AuthService.currentUser
     console.log($scope.currentUser);
     $scope.isAuthenticated = function() {
@@ -19,5 +20,6 @@ angular.module('eventMeetApp')
     $scope.logout = function(){
       console.log("logout")
       $auth.logout();
+      $location.path('/').replace();
     }
  }]);
