@@ -1,6 +1,6 @@
 'use strict'
 angular.module('eventMeetApp')
-.factory('RoomsService', function($http){
+.factory('RoomsService', function($http, $location){
 
   var o = {};
 
@@ -23,6 +23,12 @@ angular.module('eventMeetApp')
       o.rooms.push(data.room);
     });
   };
+
+  o.delete = function(id){
+    return $http.delete('http://localhost:3000/api/rooms/'+id).success(function(){
+      $location.path('/rooms').replace()
+    })
+  }
 
   return o;
 });

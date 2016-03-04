@@ -6,11 +6,10 @@ angular.module('eventMeetApp')
   'RoomsService',
   'AuthService',
   'room',
-  function($scope, RoomsService, AuthService, $stateParams, room) {
+  function($scope, $stateParams, RoomsService, AuthService, room) {
 
   var pathname = window.location.href;
   $scope.room = room;
-  console.log(room)
   $scope.count = 0
   $scope.currentUser = AuthService.currentUser;
   $scope.showform = false;
@@ -40,5 +39,11 @@ angular.module('eventMeetApp')
       $scope.showform = false;
     }
   };
+
+  $scope.closeRoom = function(){
+    var id = (parseInt($stateParams.id) + 1).toString()
+    console.log(id)
+    RoomsService.delete(id)
+  }
 
 }]);

@@ -13,15 +13,14 @@
     <hr />
     <div class="method">
         <div class="row margin-0 list-header hidden-sm hidden-xs">
-            <div class="col-md-3"><div class="header">Name</div></div>
-            <div class="col-md-2"><div class="header">Host</div></div>
-            <div class="col-md-2"><div class="header">Number of players</div></div>
+            <div class="col-md-4"><div class="header">Name</div></div>
+            <div class="col-md-3"><div class="header">Number of players</div></div>
             <div class="col-md-5"><div class="header">Description</div></div>
         </div>
 
     <div ng-repeat="room in rooms">
         <div class="row margin-0">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="cell">
                     <div class="propertyname">
                         <a href="/#/rooms/{{$index}}">
@@ -30,14 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="cell">
-                    <div class="type">
-                        <code>{{room.host.name}}</code>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="cell">
                     <div class="isrequired">
                         {{room.players.length}}
