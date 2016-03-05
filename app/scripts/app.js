@@ -67,7 +67,7 @@ angular
         }
       },
       resolve: {
-        postPromise: ['RoomsService', function(RoomsService){
+        roomsPromise: ['RoomsService', function(RoomsService){
           return RoomsService.getAll();
         }],
         checkLoginIn: ['$auth', function($auth){
@@ -102,6 +102,7 @@ angular
       },
       resolve: {
         room: ['$stateParams', 'RoomsService', function($stateParams, RoomsService) {
+          console.log("hit resolve")
           var id = (parseInt($stateParams.id) + 1).toString()
           return RoomsService.get(id);
         }],
