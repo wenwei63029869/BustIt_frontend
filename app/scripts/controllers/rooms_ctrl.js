@@ -1,6 +1,9 @@
 'use strict'
 angular.module('eventMeetApp')
-.controller('RoomsCtrl', ['$scope', "RoomsService", function($scope, RoomsService) {
+.controller('RoomsCtrl', [
+  '$scope',
+  'RoomsService',
+  function($scope, RoomsService) {
   var pathname = window.location.href;
   if (pathname === "http://localhost:9000/#/rooms") {
     $("#header").css("background-color", "#383b43");
@@ -35,5 +38,7 @@ angular.module('eventMeetApp')
   };
 
   $scope.reset();
+
+  $scope.join
 
 }]);
