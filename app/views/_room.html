@@ -24,18 +24,20 @@
         <br/>
         <br/>
         <br/>
-        <span ng-if='!(currentUser.role)'>
+        <!-- <span ng-if='!(currentUser.role)'> -->
         <label> Phone number: </label><br>
-        <input type="text" ng-model="player.phoneNumber" required /><br />
-        </span>
+        <input type="text" ng-model="player.phoneNumber" ng-init="player.phoneNumber = currentUser.phone_number" required/><br />
+        <!-- </span> -->
         <label for="role"> Role select: </label><br>
-        <select name="role" ng-model="player.role">
-          <option ng-if="!hasJudge && currentUser.role !== 'judge'" value="judge">Judge</option>
-          <option ng-if="currentUser.role !== 'player'" value="player">Player</option>
+        <select name="role" ng-model="player.role" ng-init="player.role = currentUser.role" required>
+          <option value="judge">Judge</option>
+          <option value="player">Player</option>
           <option value="audience">Audience</option>
         </select>
         <br/>
-        <input type="submit" value="Add" />
+        <input ng-if='!currentUser.role' type="submit" value="Join" />
+        <input ng-if='currentUser.role' type="submit" value="Change" />
+        <input type="button" ng-click="exitGame()" value="exit the game" />
         <input type="button" ng-click="cancel()" value="Cancel" />
     </form>
     </div>

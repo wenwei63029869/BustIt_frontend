@@ -30,6 +30,7 @@ angular.module('eventMeetApp')
     console.log(players[i].email === $scope.currentUser.email)
     if (players[i].email === $scope.currentUser.email) {
       $scope.currentUser = players[i];
+      console.log($scope.currentUser);
     };
   };
 
@@ -61,9 +62,16 @@ angular.module('eventMeetApp')
   };
 
   $scope.addPlayer = function(player) {
+    console.log(player)
     RoomsService.update($stateParams.id, player)
     $state.reload();
   };
+
+  $scope.exitGame = function() {
+    var content = {"exit" : "true"}
+    RoomsService.update($stateParams.id, content)
+    $state.reload();
+  }
 
   $scope.closeRoom = function(){
     RoomsService.delete($stateParams.id)
