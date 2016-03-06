@@ -20,6 +20,26 @@ angular.module('eventMeetApp')
     $("#header").css("background-color", "#383b43");
   };
 
+  $scope.hasJudge = false;
+
+  var players = room.players
+
+
+  // temporary way to check if the current user is joining the game and what role he is playing
+  for (var i = 0; i < players.length; i++) {
+    console.log(players[i].email === $scope.currentUser.email)
+    if (players[i].email === $scope.currentUser.email) {
+      $scope.currentUser = players[i];
+    };
+  };
+
+  for (var i = 0; i < players.length; i++) {
+    if (players[i].role === 'judge') {
+      $scope.hasJudge == true;
+      $scope.judge = players[i];
+    }
+  }
+
   console.log("hit")
 
   if ($scope.room.players) {
@@ -28,7 +48,7 @@ angular.module('eventMeetApp')
    $scope.count = 0
   }
 
-  if ($scope.count === 7) {
+  if ($scope.count === 8) {
     $scope.showform = false;
   }
 
@@ -41,16 +61,12 @@ angular.module('eventMeetApp')
   };
 
   $scope.addPlayer = function(player) {
-    console.log(player);
-    var id = (parseInt($stateParams.id) + 1).toString()
-    RoomsService.update(id, player)
-    // $scope.count = $scope.room.players.length;
+    RoomsService.update($stateParams.id, player)
     $state.reload();
   };
 
   $scope.closeRoom = function(){
-    var id = (parseInt($stateParams.id) + 1).toString()
-    RoomsService.delete(id)
+    RoomsService.delete($stateParams.id)
   }
 
 }]);

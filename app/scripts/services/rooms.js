@@ -19,9 +19,13 @@ angular.module('eventMeetApp')
     };
 
   o.create = function(content) {
-    return $http.post('http://localhost:3000/api/rooms', content).success(function(data){
+    return $http.post('http://localhost:3000/api/rooms', content)
+    .success(function(data){
         o.rooms.push(data.room);
-      });
+      })
+    .error(function(error){
+      console.log(error);
+    });
   };
 
   o.update = function(id, content) {
