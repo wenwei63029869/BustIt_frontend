@@ -18,7 +18,8 @@ angular
   'ngSanitize',
   'ngTouch',
   'angular-flippy',
-  'satellizer'
+  'satellizer',
+  "ngTable"
 ])
 .config(function($stateProvider, $urlRouterProvider, $authProvider) {
     $urlRouterProvider.otherwise('/');
@@ -102,9 +103,7 @@ angular
       },
       resolve: {
         room: ['$stateParams', 'RoomsService', function($stateParams, RoomsService) {
-          console.log("hit resolve")
-          var id = (parseInt($stateParams.id) + 1).toString()
-          return RoomsService.get(id);
+          return RoomsService.get($stateParams.id);
         }],
         checkLoginIn: ['$auth', function($auth){
           console.log("hit it")

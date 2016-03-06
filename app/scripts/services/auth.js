@@ -6,12 +6,12 @@ angular.module('eventMeetApp')
   o.getProfile = function() {
     console.log('hit get profile')
     return $http.get('http://localhost:3000/api/me')
-      .success(function(data){
-        console.log("data: " + data)
-        console.log(data)
-        angular.copy(data, o.currentUser);
+      .success(function(msg){
+        console.log("data: " + msg)
+        console.log(msg)
+        angular.copy(msg, o.currentUser);
+        console.log("o.currentUser:" + o.currentUser)
       });
-    console.log("o.currentUser:" + o.currentUser)
   };
 
   o.authenticate = function(provider) {

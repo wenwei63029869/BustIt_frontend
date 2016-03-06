@@ -11,12 +11,22 @@
     </p>
 
     <hr />
-    <div class="method">
-        <div class="row margin-0 list-header hidden-sm hidden-xs">
+    <div class="rooms-list">
+        <table ng-table="tableParams" class="table" show-filter="true">
+            <tr ng-repeat="room in $data">
+                <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+                    <a href="/#/rooms/{{room.id}}">{{room.name}}</a>
+                </td>
+                <td title="'Current Players'">{{room.players.length}}</td>
+                <td title="'Description'">{{room.description}}</td>
+            </tr>
+        </table>
+       <!--  <div class="row margin-0 list-header hidden-sm hidden-xs">
             <div class="col-md-4"><div class="header">Name</div></div>
             <div class="col-md-3"><div class="header">Number of players</div></div>
             <div class="col-md-5"><div class="header">Description</div></div>
         </div>
+
 
     <div ng-repeat="room in rooms">
         <div class="row margin-0">
@@ -44,9 +54,9 @@
                 </div>
             </div>
         </div>
-    </div>
-        <br/>
-        <button class='create-room-button button special' ng-click='jumpToAddRooms()'>Create a new room</button>
+    </div> -->
+    <br/>
+    <button class='create-room-button button special' ng-click='jumpToAddRooms()'>Create a new room</button>
     </div>
   </div>
 </section>

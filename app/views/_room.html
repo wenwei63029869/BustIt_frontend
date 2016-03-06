@@ -5,17 +5,17 @@
     <br/>
     <br/>
     <br/>
-    <h2>{{room.name}}</h2>
+    <h2>{{room.name}} <small ng-if='hasJudge'>Judge: {{judge.display_name}}</small></h2>
 
 
-    <p ng-if='count < 7' class="lead">
-        Need {{7-count}} more player
+    <p ng-if='count < 8' class="lead">
+        Need {{8-count}} more player
     </p>
-    <p ng-if='count === 7' class="lead">
+    <p ng-if='count === 8' class="lead">
         You have enough people to start the game!
     </p>
     <br/>
-    <button ng-hide='showform' ng-if='count < 7'class='create-room-button button special' ng-click='showForm()'>Join</button>
+    <button ng-hide='showform' ng-if='count < 8'class='create-room-button button special' ng-click='showForm()'><span ng-if="currentUser.role === nil">Join</Span><span ng-if="currentUser.role !== nil">Change role</Span></button>
 
     <button class='create-room-button button special' ng-click='closeRoom()'>Close room</button>
 
@@ -24,9 +24,20 @@
         <br/>
         <br/>
         <br/>
-        Phone Number
-        <input type="text" ng-model="player.phoneNumber" required /><br />
-        <input type="submit" value="Add" />
+        <!-- <span ng-if='!(currentUser.role)'> -->
+        <label> Phone number: </label><br>
+        <input type="text" ng-model="player.phoneNumber" ng-init="player.phoneNumber = currentUser.phone_number" required/><br />
+        <!-- </span> -->
+        <label for="role"> Role select: </label><br>
+        <select name="role" ng-model="player.role" ng-init="player.role = currentUser.role" required>
+          <option value="judge">Judge</option>
+          <option value="player">Player</option>
+          <option value="audience">Audience</option>
+        </select>
+        <br/>
+        <input ng-if='!currentUser.role' type="submit" value="Join" />
+        <input ng-if='currentUser.role' type="submit" value="Change" />
+        <input type="button" ng-click="exitGame()" value="exit the game" />
         <input type="button" ng-click="cancel()" value="Cancel" />
     </form>
     </div>
