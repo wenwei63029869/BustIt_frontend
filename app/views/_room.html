@@ -9,7 +9,7 @@
 
 
     <p ng-if='count < 8' class="lead">
-        Need {{8-count}} more player
+        {{8-count}} more spots
     </p>
     <p ng-if='count === 8' class="lead">
         You have enough people to start the game!
@@ -24,13 +24,11 @@
         <br/>
         <br/>
         <br/>
-        <!-- <span ng-if='!(currentUser.role)'> -->
         <label> Phone number: </label><br>
         <input type="text" ng-model="player.phoneNumber" ng-init="player.phoneNumber = currentUser.phone_number" required/><br />
-        <!-- </span> -->
         <label for="role"> Role select: </label><br>
         <select name="role" ng-model="player.role" ng-init="player.role = currentUser.role" required>
-          <option value="judge">Judge</option>
+          <option ng-if='hasJudge' value="judge">Judge</option>
           <option value="player">Player</option>
           <option value="audience">Audience</option>
         </select>
@@ -45,7 +43,8 @@
 </section>
 
 <!-- player list -->
-<section id="players" ng-if='count !== 0' class="wrapper style2 special">
+<!-- need to think about who can see the key words and who can not -->
+<section id="players" ng-if='count !== 0 && currentUser.role' class="wrapper style2 special">
   <div class="container">
       <div class="method">
         <table>
