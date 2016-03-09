@@ -19,7 +19,8 @@ angular
   'ngTouch',
   'angular-flippy',
   'satellizer',
-  "ngTable"
+  "ngTable",
+  'BustItFilter'
 ])
 .config(function($stateProvider, $urlRouterProvider, $authProvider) {
     $urlRouterProvider.otherwise('/');
@@ -72,9 +73,7 @@ angular
           return RoomsService.getAll();
         }],
         checkLoginIn: ['$auth', function($auth){
-          console.log("hit it")
           if (!$auth.isAuthenticated()) {
-            console.log("not login")
             $location.path('/').replace();
           }
         }]

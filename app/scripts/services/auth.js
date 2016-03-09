@@ -1,7 +1,7 @@
 angular.module('eventMeetApp')
 .factory( 'AuthService', function($http, $auth) {
   // we can just create a auth route in backend and return a json object of current user.
-  o = {currentUser: ["ljgajgpwgjwg"]}
+  o = {currentUser: []}
 
   o.getProfile = function() {
     console.log('hit get profile')
@@ -10,7 +10,7 @@ angular.module('eventMeetApp')
         console.log("data: " + msg)
         console.log(msg)
         angular.copy(msg, o.currentUser);
-        console.log("o.currentUser:" + o.currentUser)
+        console.log("o.currentUser:", o.currentUser)
       });
   };
 

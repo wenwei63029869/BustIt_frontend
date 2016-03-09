@@ -6,8 +6,6 @@
     <br/>
     <br/>
     <h2>{{room.name}} <small ng-if='hasJudge'>Judge: {{judge.display_name}}</small></h2>
-
-
     <p ng-if='count < 8' class="lead">
         {{8-count}} more spots
     </p>
@@ -15,11 +13,14 @@
         You have enough people to start the game!
     </p>
     <br/>
-    <button ng-hide='showform' ng-if='count < 8'class='create-room-button button special' ng-click='showForm()'><span ng-if="currentUser.role === nil">Join</Span><span ng-if="currentUser.role !== nil">Change role</Span></button>
+    <div ng-if="room.status !== 'in progress'">
+    <button ng-hide='showJoinGameForm' ng-if='count < 8' class='create-room-button button special' ng-click='showGameForm()'>
+      <span ng-if="currentUser.role === nil">Join</Span>
+      <span ng-if="currentUser.role !== nil">Change role</Span>
+    </button>
 
     <button class='create-room-button button special' ng-click='closeRoom()'>Close room</button>
-
-    <form ng-show='showform' novalidate class="css-form" ng-submit="addPlayer(player)">
+    <form ng-show='showJoinGameForm' novalidate class="css-form" ng-submit="addPlayer(player)">
         <br/>
         <br/>
         <br/>
@@ -28,7 +29,7 @@
         <input type="text" ng-model="player.phoneNumber" ng-init="player.phoneNumber = currentUser.phone_number" required/><br />
         <label for="role"> Role select: </label><br>
         <select name="role" ng-model="player.role" ng-init="player.role = currentUser.role" required>
-          <option ng-if='hasJudge' value="judge">Judge</option>
+          <option ng-hide='hasJudge' value="judge">Judge</option>
           <option value="player">Player</option>
           <option value="audience">Audience</option>
         </select>
@@ -39,6 +40,7 @@
         <input type="button" ng-click="cancel()" value="Cancel" />
     </form>
     </div>
+   </div>
   </div>
 </section>
 
@@ -47,19 +49,51 @@
 <section id="players" ng-if='count !== 0 && currentUser.role' class="wrapper style2 special">
   <div class="container">
       <div class="method">
+        <div ng-if="room.status === 'in progress' && currentUser.role !== 'judge' && currentUser.role !=='audience'">
+          <h3>Keyword: </h3>
+          <br/>
+          <h1>{{currentUser.keyword}}</h1>
+        </div>
+        <!-- ng-if="room.status !== 'in progress' || currentUser.role === 'judge' || currentUser.role ==='audience'" -->
         <table>
           <th>Name</th>
+          <th>Role</th>
           <th>Keyword</th>
           <th>Status</th>
-          <tr ng-repeat="player in room.players">
+          <tr ng-repeat='player in room.players | gamePlayerFilter'>
             <td>{{player.display_name}}</td>
-            <td>keyword</td>
-            <td>Yes</td
+            <td>{{player.role}}</td>
+            <td>{{player.keyword}}</td>
+            <td><a ng-click='voteOut(player.id)'>Vote out</a></td>
           </tr>
         </table>
       </div>
+      <p ng-if='message'>{{message}}</p>
   </div>
 
-  <button ng-if='count >= 5' class='button special' ng-click='startGame()'>Let's begin!</button>
+  <!-- need to add ng-hide="room.status === 'in progress'" for start game button -->
+
+  <button ng-if='count >= 5' ng-hide="gameStarted" class='button special' ng-click='startGame()'>Let's begin!</button>
+
+  <form ng-show='showKeywordForm' novalidate class="css-form" ng-submit="addPlayer(player)">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <label> Phone number: </label><br>
+        <input type="text" ng-model="player.phoneNumber" ng-init="player.phoneNumber = currentUser.phone_number" required/><br />
+        <label for="role"> Role select: </label><br>
+        <select name="role" ng-model="player.role" ng-init="player.role = currentUser.role" required>
+          <option ng-hide='hasJudge' value="judge">Judge</option>
+          <option value="player">Player</option>
+          <option value="audience">Audience</option>
+        </select>
+        <br/>
+        <input ng-if='!currentUser.role' type="submit" value="Join" />
+        <input ng-if='currentUser.role' type="submit" value="Change" />
+        <input type="button" ng-click="exitGame()" value="exit the game" />
+        <input type="button" ng-click="cancel()" value="Cancel" />
+    </form>
+
 </section>
 

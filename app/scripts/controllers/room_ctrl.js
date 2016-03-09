@@ -11,10 +11,10 @@ angular.module('eventMeetApp')
 
   var pathname = window.location.href;
   $scope.room = room;
-  $scope.count = 0
+  $scope.count = 0;
   $scope.currentUser = AuthService.currentUser;
-  $scope.showform = false;
-  $scope.currentUser = AuthService.currentUser
+  $scope.showJoinGameForm = false;
+  $scope.showWriteKeywordForm = false;
 
   if (pathname.includes("http://localhost:9000/#/rooms/")) {
     $("#header").css("background-color", "#383b43");
@@ -22,59 +22,84 @@ angular.module('eventMeetApp')
 
   $scope.hasJudge = false;
 
-  var players = room.players
-
-
-  // temporary way to check if the current user is joining the game and what role he is playing
-  for (var i = 0; i < players.length; i++) {
-    console.log(players[i].email === $scope.currentUser.email)
-    if (players[i].email === $scope.currentUser.email) {
-      $scope.currentUser = players[i];
-      console.log($scope.currentUser);
-    };
-  };
-
-  for (var i = 0; i < players.length; i++) {
-    if (players[i].role === 'judge') {
-      $scope.hasJudge == true;
-      $scope.judge = players[i];
+  for (var i = 0; i < room.players.length; i++) {
+    if ((room.players)[i].role === 'judge') {
+      $scope.hasJudge = true;
+      $scope.judge = (room.players)[i];
     }
   }
 
-  console.log("hit")
-
-  if ($scope.room.players) {
-    $scope.count = $scope.room.players.length
-  } else {
-   $scope.count = 0
-  }
+  $scope.count = $scope.room.players ? $scope.room.players.length : $scope.count = 0
 
   if ($scope.count === 8) {
-    $scope.showform = false;
+    $scope.showJoinGameForm = false;
   }
 
-  $scope.showForm = function() {
-    $scope.showform = true;
+  $scope.inGame = function() {
+    $scope.currentUser.role === nil
+  }
+
+  $scope.showGameForm = function() {
+    $scope.showJoinGameForm = true;
   };
 
   $scope.cancel = function() {
-    $scope.showform = false;
+    $scope.showJoinGameForm = false;
   };
 
   $scope.addPlayer = function(player) {
-    console.log(player)
     RoomsService.update($stateParams.id, player)
-    $state.reload();
+    .success(function(data){
+      console.log(data.room)
+      $scope.room = data.room
+    })
+    // $state.reload();
   };
 
   $scope.exitGame = function() {
     var content = {"exit" : "true"}
     RoomsService.update($stateParams.id, content)
-    $state.reload();
+    .success(function(data){
+      console.log(data)
+      $scope.room = data
+    })
+    // $state.reload();
   }
 
-  $scope.closeRoom = function(){
+  $scope.closeRoom = function() {
     RoomsService.delete($stateParams.id)
+  }
+
+  console.log("room status:" + room.status)
+  if (room.status === 'in progress') {
+    $scope.gameStarted = true;
+  }
+
+  $scope.startGame = function() {
+    console.log($stateParams.id)
+    RoomsService.startGame($stateParams.id)
+    .success(function(data){
+      $scope.message = "Now please check with the players and see if they receive their keywords through SMS message yet.";
+      console.log(data)
+      $scope.room = data
+    }).error(function(error){
+      $scope.message = "Sorry, there is a problem sending the keyword to some of the players. Please make sure they enter a right phone number";
+    });
+  }
+
+  $scope.voteOut = function(player_id) {
+    console.log(player_id);
+    var content = {'player_id': player_id};
+    RoomsService.voteOut($stateParams.id, content).success(function(msg){
+      console.log(msg);
+      $scope.message = msg.message
+      $scope.gameStarted = false;
+      // how to make the start game button appear again without refreshing the page?
+    });
+  }
+
+  $scope.showKeywordForm = function(){
+    $scope.showWriteKeywordForm = true;
   }
 
 }]);
