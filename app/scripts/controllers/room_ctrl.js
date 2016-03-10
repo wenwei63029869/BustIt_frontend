@@ -50,8 +50,15 @@ angular.module('eventMeetApp')
         };
       };
       // console.log("count ", $scope.count)
-      return $scope.count
+    } else{
+      for (var i = 0; i < $scope.room.players.length; i++) {
+        if (($scope.room.players)[i].role === 'spy' || ($scope.room.players)[i].role === 'citizen') {
+          console.log("count ", $scope.count)
+          $scope.count++
+        };
+      };
     };
+    return $scope.count
   };
 
   countPlayer();
