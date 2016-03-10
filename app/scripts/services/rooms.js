@@ -14,6 +14,7 @@ angular.module('eventMeetApp')
 
   o.get = function(id) {
     return $http.get('http://localhost:3000/api/rooms/'+id).then(function(res){
+        console.log(res.data)
         return res.data;
       });
     };
@@ -40,5 +41,14 @@ angular.module('eventMeetApp')
     })
   }
 
+  o.startGame = function(id, content){
+    return $http.post('http://localhost:3000/api/rooms/'+id+'/game_begin', content)
+  }
+
+  o.voteOut = function(id, content) {
+    return $http.post('http://localhost:3000/api/rooms/'+id+'/vote_out', content)
+  }
+
   return o;
+
 });
