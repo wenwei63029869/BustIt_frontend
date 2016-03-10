@@ -41,8 +41,8 @@ angular.module('eventMeetApp')
     })
   }
 
-  o.startGame = function(id){
-    return $http.get('http://localhost:3000/api/rooms/'+id+'/game_begin')
+  o.startGame = function(id, content){
+    return $http.post('http://localhost:3000/api/rooms/'+id+'/game_begin', content)
   }
 
   o.voteOut = function(id, content) {

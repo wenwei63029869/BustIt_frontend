@@ -31,20 +31,20 @@ angular.module('eventMeetApp')
 
   $scope.count = $scope.room.players ? $scope.room.players.length : $scope.count = 0
 
-  if ($scope.count === 8) {
-    $scope.showJoinGameForm = false;
-  }
+  // if ($scope.count === 8) {
+  //   $scope.showJoinGameForm = !$scope.showJoinGameForm;
+  // }
 
   $scope.inGame = function() {
     $scope.currentUser.role === nil
   }
 
   $scope.showGameForm = function() {
-    $scope.showJoinGameForm = true;
+    $scope.showJoinGameForm = !$scope.showJoinGameForm;
   };
 
   $scope.cancel = function() {
-    $scope.showJoinGameForm = false;
+    $scope.showJoinGameForm = !$scope.showJoinGameForm;
   };
 
   $scope.addPlayer = function(player) {
@@ -52,6 +52,7 @@ angular.module('eventMeetApp')
     .success(function(data){
       console.log(data.room)
       $scope.room = data.room
+      $scope.showJoinGameForm = !$scope.showJoinGameForm;
     })
     // $state.reload();
   };
@@ -70,18 +71,34 @@ angular.module('eventMeetApp')
     RoomsService.delete($stateParams.id)
   }
 
-  console.log("room status:" + room.status)
-  if (room.status === 'in progress') {
-    $scope.gameStarted = true;
-  }
-
   $scope.startGame = function() {
     console.log($stateParams.id)
-    RoomsService.startGame($stateParams.id)
+    RoomsService.startGame($stateParams.id, {})
     .success(function(data){
       $scope.message = "Now please check with the players and see if they receive their keywords through SMS message yet.";
-      console.log(data)
-      $scope.room = data
+      $scope.room = data;
+      $scope.gameStarted = true;
+    }).error(function(error){
+      $scope.message = "Sorry, there is a problem sending the keyword to some of the players. Please make sure they enter a right phone number";
+    });
+  }
+
+  $scope.showKeywordFormButton = false;
+  $scope.showWriteKeywordForm = false;
+
+  $scope.showKeywordForm = function(){
+    $scope.showWriteKeywordForm = !$scope.showWriteKeywordForm;
+    $scope.showKeywordFormButton = !$scope.showKeywordFormButton;
+  }
+
+  $scope.addKeywordPair = function(keyword) {
+    console.log(keyword)
+    RoomsService.startGame($stateParams.id, {keyword_pair: keyword})
+    .success(function(data){
+      $scope.message = "Now please tell the players to refresh the page to see their keywords.";
+      $scope.room = data;
+      $scope.gameStarted = true;
+      $scope.showWriteKeywordForm = !$scope.showWriteKeywordForm;
     }).error(function(error){
       $scope.message = "Sorry, there is a problem sending the keyword to some of the players. Please make sure they enter a right phone number";
     });
@@ -91,15 +108,13 @@ angular.module('eventMeetApp')
     console.log(player_id);
     var content = {'player_id': player_id};
     RoomsService.voteOut($stateParams.id, content).success(function(msg){
-      console.log(msg);
+      console.log("msg:", msg);
       $scope.message = msg.message
+      console.log("room:", msg.room)
+      $scope.room = msg.room;
       $scope.gameStarted = false;
       // how to make the start game button appear again without refreshing the page?
     });
-  }
-
-  $scope.showKeywordForm = function(){
-    $scope.showWriteKeywordForm = true;
   }
 
 }]);

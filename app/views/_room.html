@@ -29,6 +29,7 @@
         <input type="text" ng-model="player.phoneNumber" ng-init="player.phoneNumber = currentUser.phone_number" required/><br />
         <label for="role"> Role select: </label><br>
         <select name="role" ng-model="player.role" ng-init="player.role = currentUser.role" required>
+          <!-- need to build a filter if people want to join as an audience if the players are full already-->
           <option ng-hide='hasJudge' value="judge">Judge</option>
           <option value="player">Player</option>
           <option value="audience">Audience</option>
@@ -73,26 +74,21 @@
 
   <!-- need to add ng-hide="room.status === 'in progress'" for start game button -->
 
-  <button ng-if='count >= 5' ng-hide="gameStarted" class='button special' ng-click='startGame()'>Let's begin!</button>
+  <button ng-if='count >= 5' ng-hide="gameStarted" class='button special' ng-click='startGame()'>Machine picked keyword pair and begin!</button>
+  <button ng-if='count >= 5' ng-hide="gameStarted" class='button special' ng-click='showKeywordForm()'>Write your own keyword and begin!</button>
 
-  <form ng-show='showKeywordForm' novalidate class="css-form" ng-submit="addPlayer(player)">
+  <form ng-show='showWriteKeywordForm' novalidate class="css-form" ng-submit="addKeywordPair(keyword)">
         <br/>
         <br/>
         <br/>
         <br/>
-        <label> Phone number: </label><br>
-        <input type="text" ng-model="player.phoneNumber" ng-init="player.phoneNumber = currentUser.phone_number" required/><br />
-        <label for="role"> Role select: </label><br>
-        <select name="role" ng-model="player.role" ng-init="player.role = currentUser.role" required>
-          <option ng-hide='hasJudge' value="judge">Judge</option>
-          <option value="player">Player</option>
-          <option value="audience">Audience</option>
-        </select>
+        <label> Spy keyword: </label><br>
+        <input type="text" ng-model="keyword.keyword_one" required/><br />
+        <label> Citizen keyword: </label><br>
+        <input type="text" ng-model="keyword.keyword_two" required/><br />
         <br/>
-        <input ng-if='!currentUser.role' type="submit" value="Join" />
-        <input ng-if='currentUser.role' type="submit" value="Change" />
-        <input type="button" ng-click="exitGame()" value="exit the game" />
-        <input type="button" ng-click="cancel()" value="Cancel" />
+        <input type="submit" value="Let's begin" />
+        <input type="button" ng-click="showKeywordForm()" value="Close" />
     </form>
 
 </section>
