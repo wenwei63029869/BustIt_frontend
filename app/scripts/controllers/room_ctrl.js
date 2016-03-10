@@ -11,25 +11,51 @@ angular.module('eventMeetApp')
 
   var pathname = window.location.href;
   $scope.room = room;
-  $scope.count = 0;
   $scope.currentUser = AuthService.currentUser;
   $scope.showJoinGameForm = false;
   $scope.showWriteKeywordForm = false;
+  $scope.hasJudge = false;
 
   if (pathname.includes("http://localhost:9000/#/rooms/")) {
     $("#header").css("background-color", "#383b43");
   };
 
-  $scope.hasJudge = false;
+  $scope.gameStarted = room.status === 'in progress' ? true : false;
 
-  for (var i = 0; i < room.players.length; i++) {
-    if ((room.players)[i].role === 'judge') {
+  var findJudge = function() {
+    for (var i = 0; i < $scope.room.players.length; i++) {
+      if (($scope.room.players)[i].role === 'judge') {
+        var hasJudge = true;
+        $scope.judge = ($scope.room.players)[i];
+      };
+    };
+    if (hasJudge) {
+      console.log("has judge")
       $scope.hasJudge = true;
-      $scope.judge = (room.players)[i];
+    } else {
+      console.log("has no judge")
+      $scope.hasJudge = false;
     }
-  }
+  };
 
-  $scope.count = $scope.room.players ? $scope.room.players.length : $scope.count = 0
+  findJudge();
+
+  var countPlayer = function() {
+    $scope.count = 0;
+    if (!$scope.gameStarted) {
+      for (var i = 0; i < $scope.room.players.length; i++) {
+        if (($scope.room.players)[i].role === 'player') {
+          console.log("count ", $scope.count)
+          $scope.count++
+        };
+      };
+      // console.log("count ", $scope.count)
+      return $scope.count
+    };
+  };
+
+  countPlayer();
+
 
   // if ($scope.count === 8) {
   //   $scope.showJoinGameForm = !$scope.showJoinGameForm;
@@ -48,13 +74,22 @@ angular.module('eventMeetApp')
   };
 
   $scope.addPlayer = function(player) {
-    RoomsService.update($stateParams.id, player)
-    .success(function(data){
-      console.log(data.room)
-      $scope.room = data.room
-      $scope.showJoinGameForm = !$scope.showJoinGameForm;
-    })
-    // $state.reload();
+    if (countPlayer() === 7 && player.role !== "judge") {
+      console.log("equal to 6")
+      $scope.joinGameMessage = "Sorry, the room is full. You can join the game as audience to watch the game!"
+    } else if (player.role === "judge" && $scope.hasJudge) {
+      $scope.joinGameMessage = "Sorry, judge is taken."
+    } else {
+      console.log("not equal to 6")
+      RoomsService.update($stateParams.id, player)
+      .success(function(data){
+        console.log(data.room)
+        $scope.room = data.room
+        $scope.showJoinGameForm = !$scope.showJoinGameForm;
+        findJudge();
+        $scope.joinGameMessage = "";
+      })
+    };
   };
 
   $scope.exitGame = function() {
@@ -64,7 +99,6 @@ angular.module('eventMeetApp')
       console.log(data)
       $scope.room = data
     })
-    // $state.reload();
   }
 
   $scope.closeRoom = function() {
@@ -113,7 +147,6 @@ angular.module('eventMeetApp')
       console.log("room:", msg.room)
       $scope.room = msg.room;
       $scope.gameStarted = false;
-      // how to make the start game button appear again without refreshing the page?
     });
   }
 
