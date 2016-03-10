@@ -5,16 +5,16 @@
     <br/>
     <br/>
     <br/>
-    <h2>{{room.name}} <small ng-if='hasJudge'>Judge: {{judge.display_name}}</small></h2>
-    <p ng-if='count < 8' class="lead">
-        {{8-count}} more spots
+    <h2>{{room.name}} <small ng-if='hasJudge'>Judge: {{judge.display_name}}</small><small ng-show='!hasJudge'>Need a judge</small></h2>
+    <p ng-if='count < 7' class="lead">
+        {{7-count}} more spots
     </p>
-    <p ng-if='count === 8' class="lead">
+    <p ng-if='count === 7' class="lead">
         You have enough people to start the game!
     </p>
     <br/>
     <div ng-if="room.status !== 'in progress'">
-    <button ng-hide='showJoinGameForm' ng-if='count < 8' class='create-room-button button special' ng-click='showGameForm()'>
+    <button class='create-room-button button special' ng-click='showGameForm()'>
       <span ng-if="currentUser.role === nil">Join</Span>
       <span ng-if="currentUser.role !== nil">Change role</Span>
     </button>
@@ -30,10 +30,12 @@
         <label for="role"> Role select: </label><br>
         <select name="role" ng-model="player.role" ng-init="player.role = currentUser.role" required>
           <!-- need to build a filter if people want to join as an audience if the players are full already-->
-          <option ng-hide='hasJudge' value="judge">Judge</option>
+          <option value="judge">Judge</option>
           <option value="player">Player</option>
           <option value="audience">Audience</option>
         </select>
+        <br/>
+        <p ng-if='joinGameMessage'> {{joinGameMessage}} </p>
         <br/>
         <input ng-if='!currentUser.role' type="submit" value="Join" />
         <input ng-if='currentUser.role' type="submit" value="Change" />
