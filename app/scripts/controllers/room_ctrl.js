@@ -22,12 +22,16 @@ angular.module('eventMeetApp')
 
   $scope.hasJudge = false;
 
-  for (var i = 0; i < room.players.length; i++) {
-    if ((room.players)[i].role === 'judge') {
-      $scope.hasJudge = true;
-      $scope.judge = (room.players)[i];
-    }
-  }
+  var findJudge = function() {
+    for (var i = 0; i < room.players.length; i++) {
+      if ((room.players)[i].role === 'judge') {
+        $scope.hasJudge = !$scope.hasJudge;
+        $scope.judge = (room.players)[i];
+      };
+    };
+  };
+
+  findJudge();
 
   $scope.count = $scope.room.players ? $scope.room.players.length : $scope.count = 0
 
@@ -53,8 +57,8 @@ angular.module('eventMeetApp')
       console.log(data.room)
       $scope.room = data.room
       $scope.showJoinGameForm = !$scope.showJoinGameForm;
+      findJudge();
     })
-    // $state.reload();
   };
 
   $scope.exitGame = function() {
@@ -64,7 +68,6 @@ angular.module('eventMeetApp')
       console.log(data)
       $scope.room = data
     })
-    // $state.reload();
   }
 
   $scope.closeRoom = function() {
@@ -113,7 +116,6 @@ angular.module('eventMeetApp')
       console.log("room:", msg.room)
       $scope.room = msg.room;
       $scope.gameStarted = false;
-      // how to make the start game button appear again without refreshing the page?
     });
   }
 
